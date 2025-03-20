@@ -3,6 +3,7 @@ import 'package:recipeapp/core/configs/theme/app_colors.dart';
 
 class AppTheme {
   static final apptheme = ThemeData(
+    fontFamily:"Roboto",
       primaryColor: AppColors.secondary,
       scaffoldBackgroundColor: AppColors.primary,
       brightness: Brightness.dark,
