@@ -1,13 +1,21 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_button/reactive_button.dart';
+import 'package:recipeapp/common/helper/message/display_message.dart';
 import 'package:recipeapp/common/helper/navigation/app_navigation.dart';
+import 'package:recipeapp/data/auth/models/signin_model.dart';
+import 'package:recipeapp/domain/usecase/signin.dart';
 import 'package:recipeapp/presentation/auth/pages/signup_page.dart';
+import 'package:recipeapp/presentation/home/pages/home_page.dart';
+import 'package:recipeapp/service_locator.dart';
 
 import '../../../core/configs/theme/app_colors.dart';
 
 class SigninPage extends StatelessWidget {
-  const SigninPage({super.key});
+  SigninPage({super.key});
+
+  final TextEditingController _emailCon = TextEditingController();
+  final TextEditingController _passwordCon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +45,14 @@ class SigninPage extends StatelessWidget {
 
   Widget _emailTextField(BuildContext context) {
     return TextField(
+      controller: _emailCon,
       decoration: InputDecoration(hintText: "Email"),
     );
   }
 
   Widget _passwordTextField(BuildContext context) {
     return TextField(
+      controller: _passwordCon,
       decoration: InputDecoration(hintText: "Password"),
     );
   }
@@ -53,9 +63,18 @@ class SigninPage extends StatelessWidget {
 
   Widget _singnInButton(BuildContext context) {
     return ReactiveButton(
-        onPressed: () async {},
-        onSuccess: () {},
-        onFailure: (error) {},
+        onPressed: () async {
+          await sl<SigninUseCase>().Call(
+              params: SigninModel(
+                  email: _emailCon.text, password: _passwordCon.text));
+        },
+        onSuccess: () {
+          DisplayMessage.successMessage(context, "Sign in successful");
+          AppNavigation.pushAndRemove(context, HomePage());
+        },
+        onFailure: (error) {
+          DisplayMessage.errorMessage(context, error);
+        },
         title: "Sign In",
         activeColor: AppColors.forthdary,
         height: 50);

@@ -36,6 +36,14 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_bloc:
   reactive_button: ^0.0.9
+  dartz:
+  dio:
+  logger:
+  get_it:
+  shared_preferences:
+  flutter_svg:
+  fan_carousel_image_slider:
+  youtube_player_flutter: ^9.0.9
 
 dev_dependencies:
   flutter_test:
